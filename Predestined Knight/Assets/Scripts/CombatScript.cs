@@ -24,19 +24,23 @@ public class CombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= nextAttackTime)
+        if (!FindObjectOfType<GameManager>().gameOver)
         {
-            //attacking = false;
-
-            if (Input.GetMouseButtonDown(0))
+            if (Time.time >= nextAttackTime)
             {
+                //attacking = false;
 
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                    Attack();
+                    nextAttackTime = Time.time + 1f / attackRate;
+
+                }
+
 
             }
 
-            
         }
 
         
