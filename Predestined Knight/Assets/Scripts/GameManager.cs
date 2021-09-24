@@ -9,9 +9,12 @@ public class GameManager : MonoBehaviour
 
     public float restartDelay = 1f;
     public Animator anim;
+
+    [System.NonSerialized] public bool invulnerable = false;
+
     public void EndGame()
     {
-        if (gameOver == false)
+        if (gameOver == false && invulnerable == false)
         {
             gameOver = true;
 

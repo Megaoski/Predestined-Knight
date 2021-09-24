@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GroundTrap : MonoBehaviour
 {
-    
+
     bool isFalling = false;
     float downSpeed = 0;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +18,7 @@ public class GroundTrap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isFalling)
+        if (isFalling)
         {
             downSpeed += Time.deltaTime / 10;
             transform.position = new Vector3(transform.position.x, transform.position.y - downSpeed, transform.position.z);
@@ -25,12 +27,11 @@ public class GroundTrap : MonoBehaviour
 
     private void OnTriggerEnter(Collider hit)
     {
-
-
+        
         if (hit.gameObject.tag == "Player")
         {
             //play animation of platform crumbling
-            RotateTile(15, 0.1f, 0.2f);
+            StartCoroutine(RotateObject(15, Vector3.right, 0.2f));//no va bn
 
             Invoke("Drop", 1f);
 
@@ -43,34 +44,67 @@ public class GroundTrap : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    void RotateTile(float angle, float inTime, float repeatTime)
+    IEnumerator RotateObject(float angle, Vector3 axis, float inTime)
     {
-        bool turnRight = false;
+        // calculate rotation speed
         float rotationSpeed = angle / inTime;
-        Quaternion startRotation = transform.rotation;
 
-        float deltaAngle = 0;
-
-        if(deltaAngle < angle && !turnRight)
+        while (true)
         {
-            deltaAngle += rotationSpeed * Time.deltaTime;
-            deltaAngle = Mathf.Min(deltaAngle, angle);
+            // save starting rotation position
+            Quaternion startRotation = transform.rotation;
 
-            transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, Vector3.right);
-            turnRight = true;
-        }
-        //no accede aqui, quizas hemos de ponerlo dentro del if de arriba
-        if (deltaAngle == angle && turnRight)
-        {
-            deltaAngle += rotationSpeed * Time.deltaTime;
-            deltaAngle = Mathf.Min(deltaAngle, angle);
+            float deltaAngle = 0;
 
-            transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, Vector3.left);
-            turnRight = false;
+            // rotate until reaching angle
+            while (deltaAngle < angle)
+            {
+                deltaAngle += rotationSpeed * Time.deltaTime;
+                deltaAngle = Mathf.Min(deltaAngle, angle);
+
+                transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, axis);
+
+                yield return null;
+            }
+
+            // delay here
+            yield return new WaitForSeconds(2);
+
+            StartCoroutine(RotateObject2(-15, Vector3.left, 0.2f));
         }
     }
 
+    IEnumerator RotateObject2(float angle, Vector3 axis, float inTime)
+    {
+        // calculate rotation speed
+        float rotationSpeed = angle / inTime;
 
+        while (true)
+        {
+            // save starting rotation position
+            Quaternion startRotation = transform.rotation;
+
+            float deltaAngle = 0;
+
+            // rotate until reaching angle
+            while (deltaAngle > angle)
+            {
+                deltaAngle -= rotationSpeed * Time.deltaTime;
+                deltaAngle = Mathf.Min(deltaAngle, angle);
+
+                transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, axis);
+
+                yield return null;
+            }
+
+            // delay here
+            yield return new WaitForSeconds(2);
+
+
+        }
+
+
+    }
 }
 
 

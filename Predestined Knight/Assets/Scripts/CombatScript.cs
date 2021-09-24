@@ -24,6 +24,7 @@ public class CombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!FindObjectOfType<GameManager>().gameOver)
         {
             if (Time.time >= nextAttackTime)
