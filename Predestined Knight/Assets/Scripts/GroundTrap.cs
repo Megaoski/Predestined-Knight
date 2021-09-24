@@ -30,8 +30,10 @@ public class GroundTrap : MonoBehaviour
         if (hit.gameObject.tag == "Player")
         {
             //play animation of platform crumbling
+            RotateTile(15, 0.1f, 0.2f);
+
             Invoke("Drop", 1f);
-        
+
         }
     }
 
@@ -41,5 +43,34 @@ public class GroundTrap : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-   
+    void RotateTile(float angle, float inTime, float repeatTime)
+    {
+        bool turnRight = false;
+        float rotationSpeed = angle / inTime;
+        Quaternion startRotation = transform.rotation;
+
+        float deltaAngle = 0;
+
+        if(deltaAngle < angle && !turnRight)
+        {
+            deltaAngle += rotationSpeed * Time.deltaTime;
+            deltaAngle = Mathf.Min(deltaAngle, angle);
+
+            transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, Vector3.right);
+            turnRight = true;
+        }
+        //no accede aqui, quizas hemos de ponerlo dentro del if de arriba
+        if (deltaAngle == angle && turnRight)
+        {
+            deltaAngle += rotationSpeed * Time.deltaTime;
+            deltaAngle = Mathf.Min(deltaAngle, angle);
+
+            transform.rotation = startRotation * Quaternion.AngleAxis(deltaAngle, Vector3.left);
+            turnRight = false;
+        }
+    }
+
+
 }
+
+
