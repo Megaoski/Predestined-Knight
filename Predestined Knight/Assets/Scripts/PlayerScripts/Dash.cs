@@ -13,6 +13,8 @@ public class Dash : MonoBehaviour
     public uint rollNumber;
     private uint currentRollNumber;
 
+    private bool rollsRegenerated = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,9 +46,10 @@ public class Dash : MonoBehaviour
 
             }
 
-            if (currentRollNumber < rollNumber)
+            if (currentRollNumber == 0 && !rollsRegenerated)
             {
-                StartCoroutine(AddRolls());
+                Invoke("AddRolls", 5.0f);
+                rollsRegenerated = true;
             }
 
         }
@@ -60,15 +63,14 @@ public class Dash : MonoBehaviour
         anim.SetTrigger("isDashing");
     }
 
-    IEnumerator AddRolls()
+    void AddRolls()
     {
-        while (true)
-        {
-            //yield return new WaitForSeconds(5);// this will pause for 5 seconds
-            currentRollNumber++;
-            Debug.Log("Adding roll");
-            yield return new WaitForSeconds(3);
-
-        }
+                    
+        currentRollNumber = rollNumber;
+        rollsRegenerated = false;
+        Debug.Log("Adding roll");
+            
+            
+           
     }
 }
