@@ -2746,6 +2746,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1349150361055734, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
   m_PrefabInstance: {fileID: 1678607534}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1125108930 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95690985424869934, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
+  m_PrefabInstance: {fileID: 1678607534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1125108932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2759,6 +2764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
+  anim: {fileID: 1125108930}
 --- !u!54 &1125108933
 Rigidbody:
   m_ObjectHideFlags: 0
