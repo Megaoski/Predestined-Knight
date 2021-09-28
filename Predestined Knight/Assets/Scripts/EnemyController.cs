@@ -26,6 +26,8 @@ public class EnemyController : MonoBehaviour
     bool hasAttacked = false;
 
     public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask playerLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +77,7 @@ public class EnemyController : MonoBehaviour
                     //FaceTarget();
                     agent.isStopped = true;
                     currentState = State.ATTACKING;
+                    BasicAttack();
                     hasAttacked = true;
                 }
                 FaceTarget();
@@ -120,13 +123,13 @@ public class EnemyController : MonoBehaviour
                 anim.SetBool("Walking", true);                                       
                 break;
             case State.ATTACKING:
-                anim.SetBool("Attack", true);
+                anim.SetBool("Attack", true);                
                 break;
             case State.HURT:
 
                 break;
             case State.DEAD:
-                //anim.SetBool("Dead", true); WE ALREADY DO FROM THE SWORD CONTACT OF COMBATSCRIPT
+                Destroy(gameObject.GetComponent<Collider>());
                 break;
         }
     }
@@ -142,9 +145,26 @@ public class EnemyController : MonoBehaviour
         return AnimatorIsPlaying() && anim.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
+    void BasicAttack()
+    {
+        
+        Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
+
+        foreach (Collider player in hitPlayer)
+        {            
+            Debug.Log("Player receives hit");
+            
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {
+
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
