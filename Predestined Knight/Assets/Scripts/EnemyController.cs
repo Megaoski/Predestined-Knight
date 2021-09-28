@@ -22,8 +22,9 @@ public class EnemyController : MonoBehaviour
 
     public Animator anim;
     private State currentState;
-    
-    
+
+    bool hasAttacked = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,35 +38,54 @@ public class EnemyController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {                
+    {
+        HandleStates(currentState);
         float distance = Vector3.Distance(target.position, transform.position);
 
-
+        
         if(distance <= lookRadius && distance > agent.stoppingDistance)
         {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1h1") 
+                && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f 
+                && !anim.IsInTransition(0))
+            {
+                
+                agent.isStopped = true;
+                
+            }
+            else
+            {
+                currentState = State.WALKING;
+                FaceTarget();
+                agent.isStopped = false;
+                agent.SetDestination(target.position);
+            }
 
-            agent.isStopped = false;
-            currentState = State.WALKING;
-            agent.SetDestination(target.position);
+            hasAttacked = false;
+        }       
+        if(distance <= lookRadius && distance <= agent.stoppingDistance)//if player is in aggro range and inside attack range, skeleton stops and attacks
+        {
+            if (!hasAttacked)
+            {
+                //FaceTarget();
+                agent.isStopped = true;
+                currentState = State.ATTACKING;
+                hasAttacked = true;
+            }
             FaceTarget();
-                        
-        }
-        else if(distance <= lookRadius && distance <= agent.stoppingDistance)
+        }                
+        if(distance > lookRadius)// if player is out of aggro range keep in place
         {
             
-            FaceTarget();
-            currentState = State.ATTACKING;
-           
-        }
-        else if(distance > lookRadius)// if player is out of aggro range
-        {
-            agent.isStopped = true;
-            currentState = State.IDLE;
+             agent.isStopped = true;
+             currentState = State.IDLE;
+            
         }
 
-        HandleStates(currentState);
+        
         Debug.Log("State: " + currentState);
-       
+        Debug.Log("Stopped: " + agent.isStopped);
+        Debug.Log("Attacked: " + hasAttacked);
     }
 
     void FaceTarget()
@@ -80,14 +100,16 @@ public class EnemyController : MonoBehaviour
 
         switch (state)
         {
-            case State.IDLE:             
-                anim.SetBool("Walking", false);
+            case State.IDLE:               
+                anim.SetBool("Attack", false);
+                anim.SetBool("Walking", false);                
                 break;
-            case State.WALKING:                              
-                anim.SetBool("Walking", true);                
+            case State.WALKING:                  
+                anim.SetBool("Attack", false);
+                anim.SetBool("Walking", true);                                       
                 break;
-            case State.ATTACKING:                
-                anim.SetTrigger("Attack");                
+            case State.ATTACKING:
+                anim.SetBool("Attack", true);
                 break;
             case State.HURT:
 
