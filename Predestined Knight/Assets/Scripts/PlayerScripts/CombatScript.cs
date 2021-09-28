@@ -56,7 +56,11 @@ public class CombatScript : MonoBehaviour
 
         foreach(Collider enemy in hitEnemies)
         {
-            Debug.Log("We hit" + enemy.name);
+            //Our player attackpoint activates enemy dead animation, then from the proper enemy script we 
+            // check if dead animation is playing, if so we activate the Dead State. WORKAROUND
+            Debug.Log("We hit: " + enemy.name);
+            Animator anim = enemy.gameObject.GetComponent<Animator>();
+            anim.SetBool("Dead", true);
         }
     }
 

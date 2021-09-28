@@ -21,9 +21,11 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
 
     public Animator anim;
-    private State currentState;
+    State currentState;
 
     bool hasAttacked = false;
+
+    public Transform attackPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -40,49 +42,58 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         HandleStates(currentState);
+        
         float distance = Vector3.Distance(target.position, transform.position);
 
-        
-        if(distance <= lookRadius && distance > agent.stoppingDistance)
+        if (currentState != State.DEAD)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1h1") 
-                && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f 
-                && !anim.IsInTransition(0))
-            {
-                
-                agent.isStopped = true;
-                
-            }
-            else
-            {
-                currentState = State.WALKING;
-                FaceTarget();
-                agent.isStopped = false;
-                agent.SetDestination(target.position);
-            }
 
-            hasAttacked = false;
-        }       
-        if(distance <= lookRadius && distance <= agent.stoppingDistance)//if player is in aggro range and inside attack range, skeleton stops and attacks
-        {
-            if (!hasAttacked)
+            if (distance <= lookRadius && distance > agent.stoppingDistance)
             {
-                //FaceTarget();
-                agent.isStopped = true;
-                currentState = State.ATTACKING;
-                hasAttacked = true;
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1h1")
+                    && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f
+                    && !anim.IsInTransition(0))
+                {
+
+                    agent.isStopped = true;
+
+                }
+                else
+                {
+                    currentState = State.WALKING;
+                    FaceTarget();
+                    agent.isStopped = false;
+                    agent.SetDestination(target.position);
+                }
+
+                hasAttacked = false;
             }
-            FaceTarget();
-        }                
-        if(distance > lookRadius)// if player is out of aggro range keep in place
-        {
-            
-             agent.isStopped = true;
-             currentState = State.IDLE;
-            
+            if (distance <= lookRadius && distance <= agent.stoppingDistance)//if player is in aggro range and inside attack range, skeleton stops and attacks
+            {
+                if (!hasAttacked)
+                {
+                    //FaceTarget();
+                    agent.isStopped = true;
+                    currentState = State.ATTACKING;
+                    hasAttacked = true;
+                }
+                FaceTarget();
+            }
+            if (distance > lookRadius)// if player is out of aggro range keep in place
+            {
+
+                agent.isStopped = true;
+                currentState = State.IDLE;
+
+            }
         }
 
-        
+        if (AnimatorIsPlaying("Fall1"))//CHECK ID SKELETON IS IN FALLING ANIAMTION TO PUT IT TO DEAD
+        {
+            agent.isStopped = true;
+            currentState = State.DEAD;
+        }
+
         Debug.Log("State: " + currentState);
         Debug.Log("Stopped: " + agent.isStopped);
         Debug.Log("Attacked: " + hasAttacked);
@@ -115,10 +126,22 @@ public class EnemyController : MonoBehaviour
 
                 break;
             case State.DEAD:
-
+                //anim.SetBool("Dead", true); WE ALREADY DO FROM THE SWORD CONTACT OF COMBATSCRIPT
                 break;
         }
     }
+
+    bool AnimatorIsPlaying()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).length >
+               anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
+    bool AnimatorIsPlaying(string stateName)
+    {
+        return AnimatorIsPlaying() && anim.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
 
     private void OnDrawGizmosSelected()
     {
