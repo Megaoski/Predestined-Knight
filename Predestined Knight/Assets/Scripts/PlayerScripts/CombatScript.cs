@@ -64,6 +64,17 @@ public class CombatScript : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider coll)
+    {
+        //iF PLAYER RECEIVES HIT FROM WEAPON KILL IT FOR NOW, LATER THINK ABOUT HP SYSTEM ETC...
+        if (coll.CompareTag("Weapon"))
+        {
+            print("PLAYER HIT");
+            FindObjectOfType<GameManager>().EndGame();
+        }
+
+    }
+
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null)

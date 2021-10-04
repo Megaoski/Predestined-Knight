@@ -2115,6 +2115,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1222176508028131644, guid: c61063d231c1a2d4bb1dd06a0a00891a, type: 3}
   m_PrefabInstance: {fileID: 44246630}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &959470627 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6661270204823789708, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
+  m_PrefabInstance: {fileID: 6662148478687257290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &959470631
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959470627}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.89, z: 4.5810337}
+  m_Center: {x: -0.00017777541, y: -0.0032406382, z: 1.6473349}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,6 +3797,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1091693221749020353, guid: db7a499461d527d4e96086adb6cad60d, type: 3}
   m_PrefabInstance: {fileID: 1689382116}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1765800860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6660964266412693394, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
+  m_PrefabInstance: {fileID: 6662148478687257290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1765800861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765800860}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.28, y: 5.39, z: 2.84}
+  m_Center: {x: 0, y: 4, z: 1.54}
 --- !u!1 &1777828037
 GameObject:
   m_ObjectHideFlags: 0
@@ -4863,7 +4899,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6660964266412693394, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661270204823789708, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 6662148477631327758, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
       propertyPath: attackPoint

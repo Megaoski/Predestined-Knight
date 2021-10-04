@@ -24,10 +24,8 @@ public class EnemyController : MonoBehaviour
     State currentState;
 
     bool hasAttacked = false;
-
-    public Transform attackPoint;
-    public float attackRange = 0.5f;
-    public LayerMask playerLayer;
+   
+   
 
     // Start is called before the first frame update
     void Start()
@@ -72,15 +70,18 @@ public class EnemyController : MonoBehaviour
             }
             if (distance <= lookRadius && distance <= agent.stoppingDistance)//if player is in aggro range and inside attack range, skeleton stops and attacks
             {
-                if (!hasAttacked)
-                {
-                    //FaceTarget();
-                    agent.isStopped = true;
-                    currentState = State.ATTACKING;
-                    BasicAttack();
-                    hasAttacked = true;
-                }
+                //make that skeleton receives event when attack anim starts
+                //and while that bool is false facetarget
+                
                 FaceTarget();
+
+                if (!hasAttacked)
+                {                    
+                    agent.isStopped = true;
+                    currentState = State.ATTACKING;                    
+                    hasAttacked = true;
+                }                
+               
             }
             if (distance > lookRadius)// if player is out of aggro range keep in place
             {
@@ -134,6 +135,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+
     bool AnimatorIsPlaying()
     {
         return anim.GetCurrentAnimatorStateInfo(0).length >
@@ -144,28 +146,7 @@ public class EnemyController : MonoBehaviour
     {
         return AnimatorIsPlaying() && anim.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
+       
 
-    void BasicAttack()
-    {
-        
-        Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
-
-        foreach (Collider player in hitPlayer)
-        {            
-            Debug.Log("Player receives hit");
-            
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-
-        if (attackPoint == null)
-            return;
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
+    
 }
