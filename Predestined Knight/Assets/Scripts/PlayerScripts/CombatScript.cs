@@ -52,16 +52,16 @@ public class CombatScript : MonoBehaviour
         anim.SetInteger("AttackIndex", Random.Range(0, 3));
         anim.SetTrigger("isAttacking");
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        //Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
-        foreach(Collider enemy in hitEnemies)
-        {
-            //Our player attackpoint activates enemy dead animation, then from the proper enemy script we 
-            // check if dead animation is playing, if so we activate the Dead State. WORKAROUND
-            Debug.Log("We hit: " + enemy.name);
-            Animator anim = enemy.gameObject.GetComponent<Animator>();
-            anim.SetBool("Dead", true);
-        }
+        //foreach(Collider enemy in hitEnemies)
+        //{
+        //    //Our player attackpoint activates enemy dead animation, then from the proper enemy script we 
+        //    // check if dead animation is playing, if so we activate the Dead State. WORKAROUND
+        //    Debug.Log("We hit: " + enemy.name);
+        //    Animator anim = enemy.gameObject.GetComponent<Animator>();
+        //    anim.SetBool("Dead", true);
+        //}
     }
 
     void OnTriggerEnter(Collider coll)

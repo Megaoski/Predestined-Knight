@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     State currentState;
 
     bool hasAttacked = false;
+    bool detected = false;
    
    
 
@@ -72,8 +73,8 @@ public class EnemyController : MonoBehaviour
             {
                 //make that skeleton receives event when attack anim starts
                 //and while that bool is false facetarget
-                
-                FaceTarget();
+                if(!detected)
+                    FaceTarget();
 
                 if (!hasAttacked)
                 {                    
@@ -101,6 +102,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log("State: " + currentState);
         Debug.Log("Stopped: " + agent.isStopped);
         Debug.Log("Attacked: " + hasAttacked);
+        Debug.Log("Detected: " + detected);
     }
 
     void FaceTarget()
@@ -123,7 +125,7 @@ public class EnemyController : MonoBehaviour
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", true);                                       
                 break;
-            case State.ATTACKING:
+            case State.ATTACKING:                
                 anim.SetBool("Attack", true);                
                 break;
             case State.HURT:
@@ -146,7 +148,29 @@ public class EnemyController : MonoBehaviour
     {
         return AnimatorIsPlaying() && anim.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
-       
 
-    
+    void AttackFinished()
+    {
+        detected = false;
+    }
+
+   
+
+    void OnTriggerEnter(Collider coll)
+    {
+        //iF PLAYER RECEIVES HIT FROM WEAPON KILL IT FOR NOW, LATER THINK ABOUT HP SYSTEM ETC...
+        if (coll.CompareTag("Player"))
+        {
+            print("PLAYER DETECTED");
+            detected = true;
+        }
+
+        if (coll.CompareTag("PlayerWeapon"))
+        {
+            anim.SetBool("Dead", true);
+        }
+
+    }
+
+
 }
