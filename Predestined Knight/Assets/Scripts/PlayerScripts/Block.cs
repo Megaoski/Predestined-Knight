@@ -14,10 +14,12 @@ public class Block : MonoBehaviour
 
     public Transform Sword;
 
+    Dash dashScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        dashScript = GetComponent<Dash>();
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class Block : MonoBehaviour
 
             if (Time.time >= nextBlockTime)
             {
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) && dashScript.rolling == false)
                 {                    
                     Blocking();
                     nextBlockTime = Time.time + 1f / blockRate;
@@ -60,7 +62,7 @@ public class Block : MonoBehaviour
 
     void StartedBlocking()
     {
-        Sword.gameObject.tag = "Untagged";
+        Sword.gameObject.tag = "Block";
     }
 
     void EndBlocking()

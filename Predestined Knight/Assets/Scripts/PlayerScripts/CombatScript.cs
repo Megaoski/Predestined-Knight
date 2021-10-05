@@ -10,11 +10,12 @@ public class CombatScript : MonoBehaviour
     public float attackRate = 2.0f;
     float nextAttackTime = 0f;
 
+    Dash dashScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        dashScript = GetComponent<Dash>();
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class CombatScript : MonoBehaviour
 
         if (!FindObjectOfType<GameManager>().gameOver)
         {
-            if (Time.time >= nextAttackTime)
+            if (Time.time >= nextAttackTime && dashScript.rolling == false)
             {
                 //attacking = false;
 

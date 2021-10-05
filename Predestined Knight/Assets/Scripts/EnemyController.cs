@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
         IDLE,
         WALKING,
         ATTACKING,
-        HURT,
+        BLOCKED,
         DEAD
     };
 
@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
 
                     agent.isStopped = true;
 
-                }
+                }               
                 else
                 {
                     currentState = State.WALKING;
@@ -101,6 +101,20 @@ public class EnemyController : MonoBehaviour
             currentState = State.DEAD;
         }
 
+        //if(AnimatorIsPlaying("Hit1"))
+        //{
+        //    agent.isStopped = true;
+        //    currentState = State.BLOCKED;
+        //}
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit1")
+           && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f
+           && !anim.IsInTransition(0))
+        {
+
+            currentState = State.IDLE;
+        }
+
         Debug.Log("State: " + currentState);
         Debug.Log("Stopped: " + agent.isStopped);
         Debug.Log("Attacked: " + hasAttacked);
@@ -119,19 +133,21 @@ public class EnemyController : MonoBehaviour
 
         switch (state)
         {
-            case State.IDLE:               
+            case State.IDLE:
+                anim.SetBool("Blocked", false);
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", false);                
                 break;
-            case State.WALKING:                  
+            case State.WALKING:
+                anim.SetBool("Blocked", false);
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", true);                                       
                 break;
             case State.ATTACKING:                
                 anim.SetBool("Attack", true);                
                 break;
-            case State.HURT:
-
+            case State.BLOCKED:                
+                anim.SetBool("Blocked", true);
                 break;
             case State.DEAD:
                 Destroy(gameObject.GetComponent<Collider>());
@@ -170,6 +186,13 @@ public class EnemyController : MonoBehaviour
         if (coll.CompareTag("PlayerWeapon"))
         {
             anim.SetBool("Dead", true);
+        }
+
+        if (coll.CompareTag("Block"))
+        {
+           print("Hit Blocked");
+            currentState = State.BLOCKED;
+           //HandleStates(State.BLOCKED);
         }
 
     }
