@@ -15,6 +15,8 @@ public class Dash : MonoBehaviour
 
     private bool rollsRegenerated = false;
 
+    public bool rolling = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,18 +34,19 @@ public class Dash : MonoBehaviour
             if (Time.time >= nextRollTime)
             {
                 if (Input.GetMouseButtonDown(1) && currentRollNumber > 0)
-                {
+                {                    
                     currentRollNumber -= 1;
                     Roll();
                     nextRollTime = Time.time + 1f / rollRate;
-
                 }
 
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-                {
-                    FindObjectOfType<GameManager>().invulnerable = false;
-                }
+                
+                //if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                //{
+                //    FindObjectOfType<GameManager>().invulnerable = false;
+                //}
 
+                
             }
 
             if (currentRollNumber == 0 && !rollsRegenerated)
@@ -52,15 +55,38 @@ public class Dash : MonoBehaviour
                 rollsRegenerated = true;
             }
 
+            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll") &&
+                anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f &&
+                !anim.IsInTransition(0))
+            {
+                rolling = true;
+            }
+            else
+            {
+                rolling = false;
+            }
+                   
         }
 
         Debug.Log("ROLLS: " + currentRollNumber);
+        Debug.Log("INVULNERABILITY: " + FindObjectOfType<GameManager>().invulnerable);
+        Debug.Log("ROLLING: " + rolling);
     }
 
     void Roll()
     {
-        FindObjectOfType<GameManager>().invulnerable = true;
+        //FindObjectOfType<GameManager>().invulnerable = true;
         anim.SetTrigger("isDashing");
+    }
+
+    void SetInvulnerable()
+    {
+        FindObjectOfType<GameManager>().invulnerable = true;
+    }
+
+    void SetVulnerable()
+    {
+        FindObjectOfType<GameManager>().invulnerable = false;
     }
 
     void AddRolls()

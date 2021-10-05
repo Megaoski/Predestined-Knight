@@ -23,11 +23,14 @@ public class MovementScript : MonoBehaviour
 
     public Vector3 moveDir;
 
+    Dash dashScript;
+
     private void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         combatScript = GetComponent<CombatScript>();
+        dashScript = GetComponent<Dash>();
     }
 
     void HandleAnimations()
@@ -59,7 +62,8 @@ public class MovementScript : MonoBehaviour
 
             if (direction.magnitude >= 0.1f && !this.anim.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") &&
                 !this.anim.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") &&
-                !this.anim.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3"))//move player if is not attacking
+                !this.anim.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3") &&
+                dashScript.rolling == false)//move player if is not attacking
             {
                 isMovementPressed = true;
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
