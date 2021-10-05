@@ -7,10 +7,6 @@ public class CombatScript : MonoBehaviour
 
     public Animator anim;
 
-    public Transform attackPoint;
-    public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
-
     public float attackRate = 2.0f;
     float nextAttackTime = 0f;
 
@@ -75,11 +71,5 @@ public class CombatScript : MonoBehaviour
 
     }
 
-    void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-            return;
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
+    
 }

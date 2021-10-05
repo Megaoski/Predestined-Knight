@@ -33,7 +33,7 @@ public class Dash : MonoBehaviour
         {
             if (Time.time >= nextRollTime)
             {
-                if (Input.GetMouseButtonDown(1) && currentRollNumber > 0)
+                if (Input.GetKeyDown("space") && currentRollNumber > 0)
                 {                    
                     currentRollNumber -= 1;
                     Roll();

@@ -2810,6 +2810,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2314827289211679040, guid: 980cdc7006142704d91326b4324ba8ce, type: 3}
   m_PrefabInstance: {fileID: 2314827290353736777}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1144764302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144764298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125305f13d8e78c4e99d109dcd1a630e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 1144764304}
+  blockRate: 1
+  blocking: 0
+  Sword: {fileID: 1289725063}
 --- !u!95 &1144764304 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2314827289201827488, guid: 980cdc7006142704d91326b4324ba8ce, type: 3}
@@ -2828,11 +2844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1144764304}
-  attackPoint: {fileID: 1360014851}
-  attackRange: 1.23
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 384
   attackRate: 2
 --- !u!114 &1144764306
 MonoBehaviour:
@@ -2849,6 +2860,7 @@ MonoBehaviour:
   anim: {fileID: 1144764304}
   rollRate: 1
   rollNumber: 3
+  rolling: 0
 --- !u!1001 &1145492876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3164,6 +3176,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: ffa463f78df756248bd71544ae012994, type: 3}
   m_PrefabInstance: {fileID: 1864935694}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1289725063 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: ffa463f78df756248bd71544ae012994, type: 3}
+  m_PrefabInstance: {fileID: 1864935694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1289725066
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3175,7 +3192,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.29836717, y: 0.13391827, z: 1.1401831}
+  m_Size: {x: 0.29836717, y: 0.57, z: 1.1401831}
   m_Center: {x: -0.11037666, y: 0.03479959, z: 0.352843}
 --- !u!1 &1301249070
 GameObject:
@@ -4897,6 +4914,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 6662148477631327758, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1144764298}
     - target: {fileID: 6662148477631327758, guid: 8a93903fe0595a44aa4884ab237cc50d, type: 3}
       propertyPath: attackPoint
       value: 

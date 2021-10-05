@@ -25,7 +25,9 @@ public class EnemyController : MonoBehaviour
 
     bool hasAttacked = false;
     bool detected = false;
-   
+
+    public GameObject Player;
+    Block blockScript;
    
 
     // Start is called before the first frame update
@@ -33,7 +35,7 @@ public class EnemyController : MonoBehaviour
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
-
+        blockScript = Player.gameObject.GetComponent<Block>();
         
         anim.SetBool("Walking", true);
         currentState = State.IDLE;
