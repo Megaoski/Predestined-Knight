@@ -63,11 +63,25 @@ public class Block : MonoBehaviour
     void StartedBlocking()
     {
         Sword.gameObject.tag = "Block";
+        //FindObjectOfType<GameManager>().invulnerable = true;
     }
 
     void EndBlocking()
     {
         Sword.gameObject.tag = "PlayerWeapon";
+        //FindObjectOfType<GameManager>().invulnerable = false;
+    }
+
+    void StartedParry()
+    {
+        Sword.gameObject.tag = "Parry";
+        FindObjectOfType<GameManager>().invulnerable = true;
+    }
+
+    void EndedParry()
+    {
+        Sword.gameObject.tag = "Block";
+        FindObjectOfType<GameManager>().invulnerable = false;
     }
 
     void OnTriggerEnter(Collider coll)

@@ -7,12 +7,13 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
 
-    private enum State
+    public enum State
     {
         IDLE,
         WALKING,
         ATTACKING,
         BLOCKED,
+        PARRIED,
         DEAD
     };
 
@@ -21,7 +22,7 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
 
     public Animator anim;
-    State currentState;
+    [System.NonSerialized]public State currentState;
 
     bool hasAttacked = false;
     bool detected = false;
@@ -130,21 +131,21 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.IDLE:
-                anim.SetBool("Blocked", false);
+                anim.SetBool("Parried", false);
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", false);                
                 break;
             case State.WALKING:
-                anim.SetBool("Blocked", false);
+                anim.SetBool("Parried", false);
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", true);                                       
                 break;
             case State.ATTACKING:
-                anim.SetBool("Blocked", false);
+                anim.SetBool("Parried", false);
                 anim.SetBool("Attack", true);                
                 break;
-            case State.BLOCKED:                
-                anim.SetBool("Blocked", true);
+            case State.PARRIED:                
+                anim.SetBool("Parried", true);
                 break;
             case State.DEAD:
                 Destroy(gameObject.GetComponent<Collider>());
@@ -185,12 +186,12 @@ public class EnemyController : MonoBehaviour
             anim.SetBool("Dead", true);
         }
 
-        if (coll.CompareTag("Block"))
-        {
-           print("Hit Blocked");
-            currentState = State.BLOCKED;
-           //HandleStates(State.BLOCKED);
-        }
+        //if (coll.CompareTag("Parry") && !FindObjectOfType<GameManager>().gameOver)
+        //{
+        //   print("Hit Parried");
+        //   currentState = State.PARRIED;
+           
+        //}
 
     }
 

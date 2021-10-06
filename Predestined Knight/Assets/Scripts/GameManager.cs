@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public float restartDelay = 1f;
     public Animator anim;
 
-    [System.NonSerialized] public bool invulnerable = true;
+    [System.NonSerialized] public bool invulnerable = false;
 
     public void EndGame()
     {

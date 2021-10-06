@@ -8,6 +8,7 @@ TagManager:
   - Weapon
   - PlayerWeapon
   - Block
+  - Parry
   layers:
   - Default
   - TransparentFX
