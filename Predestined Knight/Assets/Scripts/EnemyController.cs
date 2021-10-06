@@ -101,18 +101,14 @@ public class EnemyController : MonoBehaviour
             currentState = State.DEAD;
         }
 
-        //if(AnimatorIsPlaying("Hit1"))
-        //{
-        //    agent.isStopped = true;
-        //    currentState = State.BLOCKED;
-        //}
+
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit1")
            && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f
            && !anim.IsInTransition(0))
         {
 
-            currentState = State.IDLE;
+            currentState = State.ATTACKING;
         }
 
         Debug.Log("State: " + currentState);
@@ -143,7 +139,8 @@ public class EnemyController : MonoBehaviour
                 anim.SetBool("Attack", false);
                 anim.SetBool("Walking", true);                                       
                 break;
-            case State.ATTACKING:                
+            case State.ATTACKING:
+                anim.SetBool("Blocked", false);
                 anim.SetBool("Attack", true);                
                 break;
             case State.BLOCKED:                
