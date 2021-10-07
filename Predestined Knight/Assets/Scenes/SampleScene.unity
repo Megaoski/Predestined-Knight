@@ -2857,6 +2857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1144764304}
+  sword: {fileID: 1289725062}
   attackRate: 2
 --- !u!114 &1144764306
 MonoBehaviour:

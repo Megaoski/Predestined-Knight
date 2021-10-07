@@ -6,16 +6,19 @@ public class CombatScript : MonoBehaviour
 {
 
     public Animator anim;
+    public GameObject sword;
 
     public float attackRate = 2.0f;
     float nextAttackTime = 0f;
 
     Dash dashScript;
+    Block blockScript;
 
     // Start is called before the first frame update
     void Start()
     {
         dashScript = GetComponent<Dash>();
+        blockScript = GetComponent<Block>();
     }
 
     // Update is called once per frame
@@ -24,7 +27,7 @@ public class CombatScript : MonoBehaviour
 
         if (!FindObjectOfType<GameManager>().gameOver)
         {
-            if (Time.time >= nextAttackTime && dashScript.rolling == false)
+            if (Time.time >= nextAttackTime && dashScript.rolling == false && blockScript.blocking == false)
             {
                 //attacking = false;
 
@@ -67,6 +70,7 @@ public class CombatScript : MonoBehaviour
         if (coll.CompareTag("Weapon"))
         {
             print("PLAYER HIT");
+            
             FindObjectOfType<GameManager>().EndGame();
         }
 

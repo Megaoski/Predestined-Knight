@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
         if (gameOver == false && invulnerable == false)
         {
             gameOver = true;
-
-            anim.SetTrigger("isDead");
+            anim.SetTrigger("isDead");            
             Debug.Log("GAME OVER");
             Invoke("Restart", restartDelay);
+            
         }
     }
 

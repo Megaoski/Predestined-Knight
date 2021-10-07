@@ -29,7 +29,7 @@ public class EnemySword : MonoBehaviour
         
         if (coll.CompareTag("Parry") && !FindObjectOfType<GameManager>().gameOver)
         {
-           print("Hit Parried");
+           print("Parry Stunned");
            script.currentState = EnemyController.State.PARRIED;
            //enemy.c = EnemyController.State.PARRIED;
 

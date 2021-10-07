@@ -16,10 +16,14 @@ public class Block : MonoBehaviour
 
     Dash dashScript;
 
+    [System.NonSerialized]public int maxBlockPoints = 100;
+    [System.NonSerialized] public int currentBlockPoints;
+
     // Start is called before the first frame update
     void Start()
     {
         dashScript = GetComponent<Dash>();
+        currentBlockPoints = maxBlockPoints;
     }
 
     // Update is called once per frame
@@ -27,6 +31,7 @@ public class Block : MonoBehaviour
     {
         if (!FindObjectOfType<GameManager>().gameOver)
         {
+            CheckBlockPoints();//adjust block points if parry adds too much points
 
             if (Time.time >= nextBlockTime)
             {
@@ -53,6 +58,8 @@ public class Block : MonoBehaviour
 
         }
 
+        Debug.Log("BLOCKPOINTS: " + currentBlockPoints);
+
     }
 
     void Blocking()
@@ -63,12 +70,15 @@ public class Block : MonoBehaviour
     void StartedBlocking()
     {
         Sword.gameObject.tag = "Block";
+        if(currentBlockPoints > 0)
+            FindObjectOfType<GameManager>().invulnerable = true;
         //FindObjectOfType<GameManager>().invulnerable = true;
     }
 
     void EndBlocking()
     {
         Sword.gameObject.tag = "PlayerWeapon";
+        FindObjectOfType<GameManager>().invulnerable = false;
         //FindObjectOfType<GameManager>().invulnerable = false;
     }
 
@@ -84,15 +94,28 @@ public class Block : MonoBehaviour
         FindObjectOfType<GameManager>().invulnerable = false;
     }
 
+    void CheckBlockPoints()
+    {
+        if (currentBlockPoints > maxBlockPoints)
+            currentBlockPoints = maxBlockPoints;
+    }
+
     void OnTriggerEnter(Collider coll)
     {
         
-        if (coll.CompareTag("Weapon") && blocking)
+        if (coll.CompareTag("Weapon") && blocking && Sword.gameObject.tag == "Block")
         {
             print("BLOCKED");
+            currentBlockPoints -= 40;
             //Sword.gameObject.tag = "Untagged";
         }
 
-
+        if (coll.CompareTag("Weapon") && blocking && Sword.gameObject.tag == "Parry")
+        {
+            print("PARRIED");
+            if(currentBlockPoints < maxBlockPoints)
+                currentBlockPoints += 25;
+            //Sword.gameObject.tag = "Untagged";
+        }
     }
 }
