@@ -19,11 +19,15 @@ public class Block : MonoBehaviour
     [System.NonSerialized]public int maxBlockPoints = 100;
     [System.NonSerialized] public int currentBlockPoints;
 
+    private bool blockExhausted = false;
+
     // Start is called before the first frame update
     void Start()
     {
         dashScript = GetComponent<Dash>();
         currentBlockPoints = maxBlockPoints;
+
+        StartCoroutine("RegenCoroutine");
     }
 
     // Update is called once per frame
@@ -56,10 +60,41 @@ public class Block : MonoBehaviour
                 blocking = false;
             }
 
+            if(currentBlockPoints <= 0)
+            {
+                blockExhausted = true;
+                currentBlockPoints = 0;
+            }
+
+            if(!blocking && currentBlockPoints != maxBlockPoints && !blockExhausted)
+            {                
+                RegenCoroutine();
+            }
+          
         }
 
         Debug.Log("BLOCKPOINTS: " + currentBlockPoints);
+        Debug.Log("EXHAUSTED: " + blockExhausted);
+    }
 
+    IEnumerator RegenCoroutine()
+    {
+        for (; ; )
+        {
+            while(blockExhausted)// if block is in cooldown because player has got to 0 don't regen
+            {
+                yield return null;
+            }
+
+            // execute block of code here
+            RegenBlockBar();
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+
+    void RegenBlockBar()
+    {
+        currentBlockPoints += 1;
     }
 
     void Blocking()
@@ -113,6 +148,7 @@ public class Block : MonoBehaviour
         if (coll.CompareTag("Weapon") && blocking && Sword.gameObject.tag == "Parry")
         {
             print("PARRIED");
+            blockExhausted = false;//if player parries while "shield" is broken make it regen again
             if(currentBlockPoints < maxBlockPoints)
                 currentBlockPoints += 25;
             //Sword.gameObject.tag = "Untagged";
