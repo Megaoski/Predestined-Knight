@@ -141,7 +141,7 @@ public class Block : MonoBehaviour
         if (coll.CompareTag("Weapon") && blocking && Sword.gameObject.tag == "Block")
         {
             print("BLOCKED");
-            currentBlockPoints -= 40;
+            currentBlockPoints -= 50;
             //Sword.gameObject.tag = "Untagged";
         }
 
@@ -150,7 +150,7 @@ public class Block : MonoBehaviour
             print("PARRIED");
             blockExhausted = false;//if player parries while "shield" is broken make it regen again
             if(currentBlockPoints < maxBlockPoints)
-                currentBlockPoints += 25;
+                currentBlockPoints += 50;
             //Sword.gameObject.tag = "Untagged";
         }
     }
