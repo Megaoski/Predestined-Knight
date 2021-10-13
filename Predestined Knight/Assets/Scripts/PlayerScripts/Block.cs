@@ -27,7 +27,7 @@ public class Block : MonoBehaviour
         dashScript = GetComponent<Dash>();
         currentBlockPoints = maxBlockPoints;
 
-        StartCoroutine("RegenCoroutine");
+        //StartCoroutine("RegenCoroutine");
     }
 
     // Update is called once per frame
@@ -66,10 +66,10 @@ public class Block : MonoBehaviour
                 currentBlockPoints = 0;
             }
 
-            if(!blocking && currentBlockPoints != maxBlockPoints && !blockExhausted)
-            {                
-                RegenCoroutine();
-            }
+            //if(!blocking && currentBlockPoints != maxBlockPoints && !blockExhausted)
+            //{                
+            //    RegenCoroutine();
+            //}
           
         }
 
@@ -77,20 +77,20 @@ public class Block : MonoBehaviour
         Debug.Log("EXHAUSTED: " + blockExhausted);
     }
 
-    IEnumerator RegenCoroutine()
-    {
-        for (; ; )
-        {
-            while(blockExhausted)// if block is in cooldown because player has got to 0 don't regen
-            {
-                yield return null;
-            }
+    //IEnumerator RegenCoroutine()
+    //{
+    //    for (; ; )
+    //    {
+    //        while(blockExhausted)// if block is in cooldown because player has got to 0 don't regen
+    //        {
+    //            yield return null;
+    //        }
 
-            // execute block of code here
-            RegenBlockBar();
-            yield return new WaitForSeconds(.5f);
-        }
-    }
+    //        // execute block of code here
+    //        RegenBlockBar();
+    //        yield return new WaitForSeconds(.5f);
+    //    }
+    //}
 
     void RegenBlockBar()
     {
@@ -152,6 +152,13 @@ public class Block : MonoBehaviour
             if(currentBlockPoints < maxBlockPoints)
                 currentBlockPoints += 50;
             //Sword.gameObject.tag = "Untagged";
+        }
+
+        if (coll.CompareTag("Unblockable"))//for traps to insta kill you even blocking
+        {
+            print("TRAP HITTED YOU");
+            FindObjectOfType<GameManager>().invulnerable = false;
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 }

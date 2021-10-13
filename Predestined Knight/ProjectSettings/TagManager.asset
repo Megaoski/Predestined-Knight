@@ -9,6 +9,7 @@ TagManager:
   - PlayerWeapon
   - Block
   - Parry
+  - Unblockable
   layers:
   - Default
   - TransparentFX

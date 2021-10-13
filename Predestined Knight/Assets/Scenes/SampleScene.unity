@@ -4970,6 +4970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SawTrap
       objectReference: {fileID: 0}
+    - target: {fileID: 1280610280198384349, guid: 94aab452caa7ac34294c14d430f77d28, type: 3}
+      propertyPath: m_TagString
+      value: Unblockable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94aab452caa7ac34294c14d430f77d28, type: 3}
 --- !u!1001 &1875441848856738947
@@ -4982,6 +4986,10 @@ PrefabInstance:
     - target: {fileID: 1875441848433728531, guid: 794665ef67cb0a244a42900b54de13e9, type: 3}
       propertyPath: m_Name
       value: BladeTrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875441848433728543, guid: 794665ef67cb0a244a42900b54de13e9, type: 3}
+      propertyPath: m_TagString
+      value: Unblockable
       objectReference: {fileID: 0}
     - target: {fileID: 1875441848434018419, guid: 794665ef67cb0a244a42900b54de13e9, type: 3}
       propertyPath: m_RootOrder
